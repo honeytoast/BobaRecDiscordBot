@@ -1,6 +1,14 @@
 # SampleDiscordBot-Python  
 A simple Discord bot written in Python
 
+## Project structure
+```
+├── bot.py           -> main entrypoint for the bot
+├── requirements.txt 
+├── README.md
+└── .gitignore
+```
+
 ## Set up your environment  
 python -m venv /path/to/venv  
 source /path/to/venv/bin/activate  

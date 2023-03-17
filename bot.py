@@ -3,6 +3,8 @@ import sys
 import random
 import discord
 from dotenv import load_dotenv
+from discord.ext import commands
+
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -10,18 +12,20 @@ GUILD = os.getenv('GUILD_ID')
 
 intents = discord.Intents.default()
 intents.message_content = True
-client = discord.Client(intents=intents)
+
+bot = commands.Bot(intents=intents,command_prefix='/')
+
 
 
 """
 Whenever the connection is ready
 """
-@client.event
+@bot.event
 async def on_ready():
-    guild = discord.utils.get(client.guilds, id=int(GUILD))
+    guild = discord.utils.get(bot.guilds, id=int(GUILD))
 
     print(
-        f'{client.user} is connected to the following guild:\n'
+        f'{bot.user.name} is connected to the following guild:\n'
         f'{guild.name}(id: {guild.id})'
     )
 
@@ -29,9 +33,9 @@ async def on_ready():
 """
 Whenever a message is sent
 """
-@client.event
+@bot.event
 async def on_message(message):
-    if message.author == client.user:
+    if message.author == bot.user:
         return
 
     text = message.content.lower()
@@ -53,18 +57,34 @@ async def on_message(message):
 """
 Whenever a new member joins the guild
 """
-@client.event
+@bot.event
 async def on_member_join(member):
     await member.create_dm()
     await member.dm_channel_send(
         f'Hi {member.name}, welcome to my Discord server!'
     )
 
+"""
+Have Amber say something
+"""
+
+@bot.command(name='speak', help='Have Amber say something')
+async def speak(ctx):
+    ambers_vocabulary = [
+        'Miaoooo~',
+        'Mao',
+        'Meooow',
+        'meow,.. meow,.. meow..'
+    ]
+
+    response = random.choice(ambers_vocabulary)
+    await ctx.send(response)
+
 
 """
 Log all errors to a file instead
 """
-@client.event
+@bot.event
 async def on_error(event, *args, **kwargs):
     e_info = sys.exc_info()
     with open('err.log', 'a') as f:
@@ -73,5 +93,4 @@ async def on_error(event, *args, **kwargs):
     f.close()
 
 
-
-client.run(TOKEN)
+bot.run(TOKEN)

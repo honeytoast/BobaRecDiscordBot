@@ -6,6 +6,7 @@ A simple Discord bot written in Python, which also provides random boba drink re
 2. A Discord Server which you are an admin of
 3. python3  
 4. virtualenv  
+5. (optional) A Google Cloud VM instance to host the bot on 
 
 ## Project structure
 ```
@@ -20,6 +21,12 @@ A simple Discord bot written in Python, which also provides random boba drink re
 ├── sample.jpg                 -> sample of what the bot looks like in Discord
 └── .gitignore
 ```
+
+## Optional (Set up on Google Cloud VM instance)
+1. SSH into your VM instance  
+2. Install tmux or a terminal multiplexer of your choice  
+3. Clone this repository and follow the rest of the instructions to set up  
+4. Ensure to run the last step (python bot.py) while you are in a terminal multiplexer session  
 
 ## Set up your environment  
 python3 -m venv /path/to/venv  

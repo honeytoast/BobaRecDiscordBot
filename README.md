@@ -1,22 +1,27 @@
 # SampleDiscordBot-Python  
 A simple Discord bot written in Python, which also provides random boba drink recommendations.
 
+## Requirements  
+1. A Discord Bot - you can create one for free through the [developer portal](https://discord.com/developers/applications) by creating a new application
+2. A Discord Server which you are an admin of
+3. python3  
+4. virtualenv  
+
 ## Project structure
 ```
-├── bot.py           -> main entrypoint for the bot  
-├──  lib/            -> contains additional files to support commands  
+├── bot.py                     -> main entrypoint for the bot  
+├──  lib/                      -> contains additional files to support commands  
 │   ├── __init__.py  
-│   ├── teatime.cfg  -> Context Free Grammar file to define potential boba drinks  
-│   ├── grammar.py
-│   ├── variable.py
-│   ├── variable_reference.py
+│   ├── teatime.cfg            -> Context Free Grammar (CFG) file to define potential boba drinks  
+│   ├── cfg.py                 -> defines classes for defining a CFG  
+│   ├── random_cfg_deriver.py  -> contains logic to randomly derive a string from the cfg  
 ├── requirements.txt 
 ├── README.md
 └── .gitignore
 ```
 
 ## Set up your environment  
-python -m venv /path/to/venv  
+python3 -m venv /path/to/venv  
 source /path/to/venv/bin/activate  
 pip install -r requirements.txt  
 
@@ -28,5 +33,11 @@ GUILD_ID=<Your_Guild_ID>
 DISCORD_TOKEN=<Your_DiscordBot_Token>  
 ```
 
+## Invite your Discord bot to your server
+Ensure your bot has the "Send Messages" text permission enabled when you invite it to your server.  
+If you don't have a Discord bot yet, follow their [instructions here](https://discord.com/developers/docs/getting-started#creating-an-app) up until you complete the "Installing your App" section.  
+
 ## Run your bot
 python bot.py
+
+## Sample

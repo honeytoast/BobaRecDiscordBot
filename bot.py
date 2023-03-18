@@ -41,8 +41,8 @@ async def on_ready():
 """
 Whenever a message is sent
 """
-@bot.event
-async def on_message(message):
+@bot.listen('on_message')
+async def on_amber_speak_message(message):
     if message.author == bot.user:
         return
 
@@ -53,7 +53,6 @@ async def on_message(message):
     if text in speak_commands:
         response = random.choice(ambers_vocabulary)
         await message.channel.send(response)
-    await bot.process_commands(message)
 
 
 """

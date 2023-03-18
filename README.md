@@ -1,5 +1,5 @@
-# SampleDiscordBot-Python  
-A simple Discord bot written in Python, which also provides random boba drink recommendations.
+# BobaRec-DiscordBot  
+A simple Discord bot written in Python, which speaks like my cat and also provides random boba drink recommendations.
 
 ## Requirements  
 1. A Discord Bot - you can create one for free through the [developer portal](https://discord.com/developers/applications) by creating a new application

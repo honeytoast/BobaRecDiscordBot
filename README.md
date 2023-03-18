@@ -16,7 +16,8 @@ A simple Discord bot written in Python, which also provides random boba drink re
 │   ├── cfg.py                 -> defines classes for defining a CFG  
 │   ├── random_cfg_deriver.py  -> contains logic to randomly derive a string from the cfg  
 ├── requirements.txt 
-├── README.md
+├── README.md  
+├── sample.jpg                 -> sample of what the bot looks like in Discord
 └── .gitignore
 ```
 
@@ -41,3 +42,4 @@ If you don't have a Discord bot yet, follow their [instructions here](https://di
 python bot.py
 
 ## Sample
+![AmberBot, the sample bot responding to commands](/sample.jpg)

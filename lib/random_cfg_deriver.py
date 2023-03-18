@@ -1,8 +1,6 @@
 import sys
 import random
-from . import grammar
-from . import variable
-from . import variable_reference
+from . import cfg
 
 DEBUG = 0
 
@@ -37,14 +35,14 @@ def find_references(current_string):
         # Save the reference to the list and reset the variable flag, begin, and
         # end index.
         elif is_variable:
-            variable_references.append(variable_reference.VariableReference(current_string, begin_index, end_index))
+            variable_references.append(cfg.VariableReference(current_string, begin_index, end_index))
             is_variable = False
             begin_index = i
             end_index = i
     # If we've enumerated through the whole string and the variable flag is on,
     # there's a variable that hasn't been added to the list, so add it.
     if is_variable:
-        variable_references.append(variable_reference.VariableReference(current_string, begin_index, end_index))
+        variable_references.append(cfg.VariableReference(current_string, begin_index, end_index))
     return variable_references
 
 def derive_string(current_string, grammar):
@@ -87,14 +85,14 @@ def process_grammar(filename):
         else:
             # Arrived at a new variable rule
             variable_name, production = parse_first_rule(line)
-            current_variable = variable.Variable(variable_name)
+            current_variable = cfg.Variable(variable_name)
             current_variable.rules.append(production)
             variable_list.append(current_variable)
             total_rules += 1
     input_file.close()
 
     # Instantiate our grammar with the list of variable objects
-    the_grammar = grammar.Grammar(variable_list)
+    the_grammar = cfg.Grammar(variable_list)
     start_string = the_grammar.start_variable.name
 
     # Seed the random generator and initialize an empty list of variable references

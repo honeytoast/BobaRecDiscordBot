@@ -1,9 +1,15 @@
 # SampleDiscordBot-Python  
-A simple Discord bot written in Python.
+A simple Discord bot written in Python, which also provides random boba drink recommendations.
 
 ## Project structure
 ```
-├── bot.py           -> main entrypoint for the bot
+├── bot.py           -> main entrypoint for the bot  
+├──  lib/            -> contains additional files to support commands  
+│   ├── __init__.py  
+│   ├── teatime.cfg  -> Context Free Grammar file to define potential boba drinks  
+│   ├── grammar.py
+│   ├── variable.py
+│   ├── variable_reference.py
 ├── requirements.txt 
 ├── README.md
 └── .gitignore

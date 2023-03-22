@@ -16,7 +16,7 @@ A simple Discord bot written in Python, which speaks like my cat and also provid
 │   ├── teatime.cfg            -> Context Free Grammar (CFG) file to define potential boba drinks  
 │   ├── cfg.py                 -> defines classes for defining a CFG  
 │   ├── random_cfg_deriver.py  -> contains logic to randomly derive a string from the cfg  
-├── requirements.txt 
+├── requirements.txt           -> list of dependencies  
 ├── README.md  
 ├── sample.jpg                 -> sample of what the bot looks like in Discord
 └── .gitignore

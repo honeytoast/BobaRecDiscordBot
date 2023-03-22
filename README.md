@@ -1,4 +1,4 @@
-# BobaRec-DiscordBot  
+# BobaRec_DiscordBot  
 A simple Discord bot written in Python, which speaks like my cat and also provides random boba drink recommendations.
 
 ## Requirements  

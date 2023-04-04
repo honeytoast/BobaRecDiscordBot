@@ -1,3 +1,9 @@
+# backups
+*.bak
+
+# local files
+lastepoch_deathcounts.json
+
 node_modules
 
 # Environment

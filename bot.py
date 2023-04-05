@@ -1,4 +1,5 @@
 import os
+import re
 import sys
 import random
 import discord
@@ -115,34 +116,76 @@ async def deaths(ctx):
     sorted_counts = sorted(death_counts.items(), key=lambda kv: (kv[1][1], kv[0]), reverse=True)
     for count in sorted_counts:
         response += f'{count[1][0]}: {count[1][1]}\n'
+        if len(count[1]) == 3:
+            # list the primary causes of death
+            for val in count[1][2].items():
+                try:
+                    causer = await ctx.guild.fetch_member(int(val[0]))
+                    response += f'\t{val[1]} deaths caused by {causer.display_name}\n'
+                except Exception:
+                    pass
     response += "\n```"
     await ctx.send(response)
 
 """
 [Last Epoch] Increment death count
 """
-@bot.command(name='idied', help='Add 1 to your Last Epoch death counter')
-async def idied(ctx):
+@bot.command(name='idied', help="Add 1 to your LE death count (optional: @ a user to associate cause of death)")
+async def idied(ctx, *args):
     with open('lib/lastepoch_deathcounts.json', 'r') as f:
         death_counts = json.load(f, parse_int=lambda x: int(x))
     f.close()
 
     mykey = str(ctx.message.author.id)
-    myname = str(ctx.message.author.name)
+
+    # we'll always use the display name so it updates if they've updated it
+    myname = ctx.message.author.display_name
+
+    causer_id = None
+
+    # keep tally on members causing other members' deaths
+    if len(args) == 0:
+        print("no args\n")
+    else:
+        print(args)
+        arg1 = re.match('<@([0-9]+)>', args[0])
+        if arg1 != None:
+            causer_id = arg1.groups()[0]
+
+    causer = None
+
+    if causer_id != None:
+        causer = await ctx.guild.fetch_member(int(causer_id))
 
     if mykey in death_counts:
-        val = death_counts[mykey][1]
-        death_counts[mykey] = [myname, val + 1]
+        death_counts[mykey][0] = myname
+        death_counts[mykey][1] += 1
+        if len(death_counts[mykey]) == 3 and causer != None:
+            if causer_id in death_counts[mykey][2]:
+                death_counts[mykey][2][causer_id] += 1
+            else:
+                death_counts[mykey][2][causer_id] = 1
+        elif len(death_counts[mykey]) < 3:
+            # retrofit older entries
+            death_counts[mykey].append(dict())
+            if causer_id != None:
+                death_counts[mykey][2][causer_id] = 1
     else:
-        death_counts[mykey] = [myname, 1]
+        # net new entries
+        if causer == None:
+            death_counts[mykey] = [myname, 1, dict()]
+        else:
+            death_counts[mykey] = [myname, 1, {causer_id: 1}]
 
     with open('lib/lastepoch_deathcounts.json', 'w') as f:
         json.dump(death_counts, f, indent=4)
     f.close()
 
-    response = random.choice(lastepoch_helper.rip_messages)
-    response += "I incremented your death count by 1, you can thank me with some treats :3\n"
+    # response = random.choice(lastepoch_helper.rip_messages)
+    response = "Oof! I incremented your death count by 1, you can thank me with some treats :3\n"
     response += f'```\n{death_counts[mykey][0]}: {death_counts[mykey][1]}\n```'
+    if causer_id != None:
+        response += f'Associated this death with {causer.display_name}\n'
 
     await ctx.send(response)
 

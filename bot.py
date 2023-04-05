@@ -121,7 +121,7 @@ async def deaths(ctx):
             for val in count[1][2].items():
                 try:
                     causer = await ctx.guild.fetch_member(int(val[0]))
-                    response += f'\t{val[1]} associated with {causer.display_name}\n'
+                    response += f'\t{val[1]} deaths associated with {causer.display_name}\n'
                 except Exception:
                     pass
     response += "\n```"
